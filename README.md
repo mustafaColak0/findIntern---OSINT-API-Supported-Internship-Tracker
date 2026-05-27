@@ -4,6 +4,8 @@
 
 Proje, geleneksel API'lerin sınırlamalarına veya kesintilerine karşı **Yapay Zeka (LLM)** ve **Açık Kaynak İstihbaratı (OSINT)** yöntemlerini bir arada kullanan yedekli (*failover*) bir mimariyle tasarlanmıştır.
 
+<img width="800" height="361" alt="findIntern" src="https://github.com/user-attachments/assets/9c37867e-0b8e-4a49-9bb8-b95ebbb4cca7" />
+
 ---
 
 ## 🚀 Özellikler
