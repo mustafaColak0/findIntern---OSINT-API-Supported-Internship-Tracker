@@ -17,7 +17,7 @@ st.markdown("---")
 # SOL PANEL
 st.sidebar.header("🔍 Filtreler")
 alan = st.sidebar.selectbox("Branş", ["Cyber Security", "Python Developer","Software Developer", "Data Science", "React", "Network"])
-sehir = st.sidebar.text_input("Şehir (Opsiyonel)", "İstanbul")
+sehir = st.sidebar.selectbox("Şehir", ["İstanbul", "Ankara", "İzmir", "Kocaeli", "Bursa", "Tüm Şehirler"])
 
 # ANA EKRAN BUTONLARI
 col1, col2 = st.columns(2)
@@ -34,9 +34,11 @@ with col1:
                     client = Groq(api_key=GROQ_API_KEY)
                     
                     # Yapay zekaya rol biçiyoruz (Prompt Engineering)
+                    sehir_text = "Türkiye genelinde" if sehir == "Tüm Şehirler" else f"{sehir} şehrinde"
+
                     prompt = f"""
                     Sen profesyonel bir siber güvenlik ve insan kaynakları uzmanısın. 
-                    Türkiye'de {sehir} şehrinde yaşayan ve {alan} alanında staj arayan 2 yıllık bir bilgisayar programcılığı öğrencisine nokta atışı tavsiyeler ver.
+                    {sehir_text} yaşayan ve {alan} alanında staj arayan 2 yıllık bir bilgisayar programcılığı öğrencisine nokta atışı tavsiyeler ver.
                     Hangi şirketlere odaklanmalı, mülakatlarda bu branş için ne sorarlar ve staj bulma şansını artırmak için GitHub'ına acil ne eklemeli?
                     Kısa, net ve hırçın siber güvenlikçi tarzında maddeler halinde cevap ver. Cevabın Türkçe olsun.
                     """
@@ -56,11 +58,12 @@ with col1:
 with col2:
     # OSINT Çözümü
     st.markdown("### ⚡ OSINT / Google Dork Çözümü")
-    
+    # Eğer tüm şehirler seçildiyse dorking'e şehir ekleme, spesifik şehir varsa ekle
+    sehir_dork = "" if sehir == "Tüm Şehirler" else f"+%22{sehir}%22"
     # Branşa göre özelleştirilmiş Google Dorking linkleri
-    google_dork = f"https://www.google.com/search?q=site:linkedin.com/jobs+%22{alan}%22+staj+2026"
-    st.link_button("👉 LinkedIn Canlı İlanlarını Aç (OSINT)", google_dork)
-    
+    google_dork = f"https://www.google.com/search?q=site:linkedin.com/jobs+%22{alan}%22+staj+2026{sehir_dork}"
+    st.link_button("👉 LinkedIn Canli İlanlarini Aç (OSINT)", google_dork)
+
     kariyer_link = f"https://www.kariyer.net/is-ilanlari?kw={alan}%20staj"
     st.link_button("👉 Kariyer.net İlanlarını Aç", kariyer_link)
 
